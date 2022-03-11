@@ -1,0 +1,5 @@
+mysql/data/*
+mysql/logs/*
+.idea/
+.idea/*
+quickstart/__pycache__/*
