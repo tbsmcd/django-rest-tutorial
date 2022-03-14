@@ -17,6 +17,11 @@ Creating django-rest-tutorial_web_run ... done
 2022/03/14 06:37:38 Command finished successfully.
 ```
 
+```bash
+% docker-compose exec web bash
+root@c9f09b844fbe:/code# python manage.py startapp snippets
+```
+
 ## アクセス
 
 - Web http://localhost:8002 
