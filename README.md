@@ -1,15 +1,20 @@
 # django-rest-tutorial
 
-## プロジェクト作成
-
-```bash
-docker-compose run web django-admin startproject quickstart .
-```
-
 ## 起動
 
 ```bash
 % docker-compose up
+```
+
+## プロジェクト作成
+
+```bash
+% docker-compose run web django-admin startproject tutorial .                                                                                               1 ↵ ✖ ✹
+WARNING: Found orphan containers (django-rest-tutorial_check_1) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up.
+Creating django-rest-tutorial_web_run ... done
+2022/03/14 06:37:37 Waiting for: tcp://db:3306
+2022/03/14 06:37:37 Connected to tcp://db:3306
+2022/03/14 06:37:38 Command finished successfully.
 ```
 
 ## アクセス
