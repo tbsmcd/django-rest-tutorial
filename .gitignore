@@ -2,5 +2,5 @@ mysql/data/*
 mysql/logs/*
 .idea/
 .idea/*
-tutorial/__pycache__/*
-tutorial/__init__.py
+**/__pycache__/*
+**/__init__.py

@@ -18,8 +18,12 @@ Creating django-rest-tutorial_web_run ... done
 ```
 
 ```bash
-% docker-compose exec web bash
-root@c9f09b844fbe:/code# python manage.py startapp snippets
+% docker-compose run web python manage.py startapp snippets                                                                                                   1 ↵ ✖
+WARNING: Found orphan containers (django-rest-tutorial_check_1) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up.
+Creating django-rest-tutorial_web_run ... done
+2022/03/14 06:49:06 Waiting for: tcp://db:3306
+2022/03/14 06:49:06 Connected to tcp://db:3306
+2022/03/14 06:49:06 Command finished successfully.
 ```
 
 ## アクセス
