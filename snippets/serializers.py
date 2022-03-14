@@ -3,7 +3,7 @@ from snippets.models import Snippet, LANGUAGE_CHOICES, STYLE_CHOICES
 
 
 class SnippetSerializer(serializers.Serializer):
-    created = serializers.DateTimeField(auto_now_add=True)
+    id = serializers.IntegerField(read_only=True)
     title = serializers.CharField(max_length=100, allow_blank=True, default='')
     code = serializers.CharField(style={'base_template': 'textarea.html'})
     linenos = serializers.BooleanField(required=False)
