@@ -1,5 +1,11 @@
 # django-rest-tutorial
 
+## プロジェクト作成
+
+```bash
+docker-compose run web django-admin startproject quickstart .
+```
+
 ## 起動
 
 ```bash
