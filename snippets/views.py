@@ -3,9 +3,8 @@
 from snippets.models import Snippet
 from snippets.serializers import SnippetSerializer, UserSerializer
 from snippets.permissions import IsOwnerOrReadOnly
-from rest_framework import generics
-from rest_framework import permissions, renderers
-from rest_framework.decorators import api_view
+from rest_framework import generics, permissions, renderers, viewsets
+from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from django.contrib.auth.models import User
@@ -20,46 +19,28 @@ def api_root(request, format=None):
     })
 
 
-class SnippetList(generics.ListCreateAPIView):
+class SnippetViewSet(viewsets.ModelViewSet):
     """
-    List all snippets, or create a new snippet.
-    """
-    queryset = Snippet.objects.all()
-    serializer_class = SnippetSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-
-    def perform_create(self, serializer):
-        # 保存時に User(owner) との関連を明示する
-        # ref. https://www.django-rest-framework.org/api-guide/generic-views/
-        # Save and deletion hooks
-        serializer.save(owner=self.request.user)
-
-
-class SnippetDetails(generics.RetrieveUpdateDestroyAPIView):
-    """
-    Retrieve, update or delete a snippet instance.
+    このクラスは list, create, retrieve, update, destroy アクションを自動で提供する
+    highlight と create は明示的に設定
+    create は perform_create でオーバーライドしている
     """
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
-
-class SnippetHighlight(generics.GenericAPIView):
-    queryset = Snippet.objects.all()
-    renderer_classes = [renderers.StaticHTMLRenderer]
-
-    def get(self, request, *args, **kwargs):
+    @action(detail=True, renderer_classes=[renderers.StaticHTMLRenderer])
+    def highlight(self, request, *args, **kwargs):
         snippet = self.get_object()
-        # https://www.django-rest-framework.org/api-guide/generic-views/#get_objectself
-        # インスタンスを取得して highlighted カラムを返しているだけ
         return Response(snippet.highlighted)
 
-
-class UserList(generics.ListAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
 
-class UserDetail(generics.RetrieveAPIView):
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    この ViewSet は自動的に list と retrieve アクションを提供する
+    """
     queryset = User.objects.all()
     serializer_class = UserSerializer
